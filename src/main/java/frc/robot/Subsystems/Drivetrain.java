@@ -17,9 +17,19 @@ public class Drivetrain {
     private double VyCmd;
     private double WzCmd;
     private XboxController _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+    private static Drivetrain _instance;
     
 
     public Drivetrain() {}
+
+    public static Drivetrain getInstance() {
+        if (_instance == null)
+        {
+            _instance = new Drivetrain();
+        }
+
+        return _instance;
+    }
 
     public void init() {
         _frontLeft.configAllSettings(Constants.defaultConfig);
