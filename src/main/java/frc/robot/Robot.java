@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Subsystems.*;
 import frc.robot.Utilities.Constants;
 
 /**
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
    */
 
    private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+   private Drivetrain _drivetrain;
 
   @Override
   public void robotInit() {
@@ -41,6 +43,7 @@ public class Robot extends TimedRobot {
     Constants.defaultConfig.peakCurrentLimit = 35;
     Constants.defaultConfig.peakCurrentDuration = 1000;
     Constants.defaultConfig.continuousCurrentLimit = 30;
+    _drivetrain = Drivetrain.getInstance();
   }
 
   /**
@@ -95,6 +98,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    _drivetrain.periodic();
     
   }
 
