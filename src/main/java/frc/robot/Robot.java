@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -32,7 +28,7 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+  //  private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
    private Drivetrain _drivetrain;
 
   @Override
