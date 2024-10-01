@@ -36,6 +36,8 @@ public class Drivetrain {
         _left2.configAllSettings(Constants.defaultConfig);
         _right1.configAllSettings(Constants.defaultConfig);
         _right2.configAllSettings(Constants.defaultConfig);
+        _left2.follow(_left1);
+        _right2.follow(_right1);
     }
 
     public void periodic() {
@@ -53,14 +55,13 @@ public class Drivetrain {
     public void drive() {
         if (VyCmd != 0) {
             _left1.set(ControlMode.PercentOutput, VyCmd);
-            _left2.set(ControlMode.PercentOutput, VyCmd);
             _right1.set(ControlMode.PercentOutput, VyCmd);
-            _right2.set(ControlMode.PercentOutput, VyCmd);
+        } else if (WzCmd != 0 && VyCmd != 0) {
+            _left1.set(ControlMode.PercentOutput, VyCmd * WzCmd < 0 ? 1 + WzCmd : 1);
+            _right1.set(ControlMode.PercentOutput, VyCmd * WzCmd > 0 ? 1 - WzCmd : 1);
         } else if (WzCmd != 0) {
             _left1.set(ControlMode.PercentOutput, WzCmd);
-            _left2.set(ControlMode.PercentOutput, WzCmd);
             _right1.set(ControlMode.PercentOutput, -WzCmd);
-            _right2.set(ControlMode.PercentOutput, -WzCmd);
         }
     }
 
