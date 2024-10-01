@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Utilities.*;
 
 public class Drivetrain {
@@ -44,6 +45,12 @@ public class Drivetrain {
 
         WzCmd = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints, Constants.RotAxis_outputTable, _driverController.getRightX());
 
+        drive();
+
+        odometry();
+    }
+
+    public void drive() {
         if (VyCmd != 0) {
             _left1.set(ControlMode.PercentOutput, VyCmd);
             _left2.set(ControlMode.PercentOutput, VyCmd);
@@ -55,5 +62,10 @@ public class Drivetrain {
             _right1.set(ControlMode.PercentOutput, -WzCmd);
             _right2.set(ControlMode.PercentOutput, -WzCmd);
         }
+    }
+
+    public void odometry() {
+        SmartDashboard.putNumber("foward percent", VyCmd);
+        SmartDashboard.putNumber("turn percent", WzCmd);
     }
 }
