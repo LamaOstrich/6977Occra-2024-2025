@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-  //  private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+   private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
    private Drivetrain _drivetrain;
 
   @Override

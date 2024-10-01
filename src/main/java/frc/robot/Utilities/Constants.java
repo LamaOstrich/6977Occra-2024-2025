@@ -6,10 +6,10 @@ public class Constants {
     
     public static final int kDriverControllerUsbSlot = 0;
     public static final int kOperatorControllerUsbSlot = 1;
-    public static final int kFrontLeftDriveMotor = 2;
-    public static final int kFrontRightDriveMotor = 3;
-    public static final int kBackLeftDriveMotor = 4;
-    public static final int kBackRightDriveMotor = 5;
+    public static final int kLeft1DriveMotor = 2;
+    public static final int kLeft2DriveMotor = 3;
+    public static final int kRight1DriveMotor = 4;
+    public static final int kRight2DriveMotor = 5;
 
     public static final int kPigeonId = 13;
 
