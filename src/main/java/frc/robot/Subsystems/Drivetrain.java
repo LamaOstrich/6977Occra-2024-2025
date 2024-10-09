@@ -53,13 +53,18 @@ public class Drivetrain {
     }
 
     public void drive() {
-        if (VyCmd != 0) {
+        if (WzCmd != 0 && VyCmd != 0) {
+            if (WzCmd < 0) {
+                _left1.set(ControlMode.PercentOutput, VyCmd * 1 + WzCmd);
+                _right1.set(ControlMode.PercentOutput, VyCmd);
+            } else {
+                _left1.set(ControlMode.PercentOutput, VyCmd);
+                _right1.set(ControlMode.PercentOutput, VyCmd * 1 - WzCmd);
+            }
+        } else if (VyCmd != 0) {
             _left1.set(ControlMode.PercentOutput, VyCmd);
             _right1.set(ControlMode.PercentOutput, VyCmd);
-        } else if (WzCmd != 0 && VyCmd != 0) {
-            _left1.set(ControlMode.PercentOutput, VyCmd * WzCmd < 0 ? 1 + WzCmd : 1);
-            _right1.set(ControlMode.PercentOutput, VyCmd * WzCmd > 0 ? 1 - WzCmd : 1);
-        } else if (WzCmd != 0) {
+        }  else if (WzCmd != 0) {
             _left1.set(ControlMode.PercentOutput, WzCmd);
             _right1.set(ControlMode.PercentOutput, -WzCmd);
         }
@@ -68,5 +73,7 @@ public class Drivetrain {
     public void odometry() {
         SmartDashboard.putNumber("foward percent", VyCmd);
         SmartDashboard.putNumber("turn percent", WzCmd);
+        SmartDashboard.putNumber("left f/t percent", _left1.getMotorOutputPercent());
+        SmartDashboard.putNumber("right f/t percent", _right1.getMotorOutputPercent());
     }
 }
