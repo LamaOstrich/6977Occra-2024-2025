@@ -56,14 +56,14 @@ public class Drivetrain {
         if (WzCmd != 0 && VyCmd != 0) {
             if (WzCmd < 0) {
                 _left1.set(ControlMode.PercentOutput, VyCmd * 1 + WzCmd);
-                _right1.set(ControlMode.PercentOutput, VyCmd);
+                _right1.set(ControlMode.PercentOutput, -VyCmd);
             } else {
                 _left1.set(ControlMode.PercentOutput, VyCmd);
-                _right1.set(ControlMode.PercentOutput, VyCmd * 1 - WzCmd);
+                _right1.set(ControlMode.PercentOutput, -VyCmd * 1 - WzCmd);
             }
         } else if (VyCmd != 0) {
             _left1.set(ControlMode.PercentOutput, VyCmd);
-            _right1.set(ControlMode.PercentOutput, VyCmd);
+            _right1.set(ControlMode.PercentOutput, -VyCmd);
         }  else if (WzCmd != 0) {
             _left1.set(ControlMode.PercentOutput, WzCmd);
             _right1.set(ControlMode.PercentOutput, -WzCmd);
