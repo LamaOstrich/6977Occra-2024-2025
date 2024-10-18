@@ -10,7 +10,6 @@ public class Spiker {
 
     private TalonSRX _topMotor;
     private TalonSRX _lowMotor;
-    // pirvate SpikerState previousState = SpikerState.IDLE;
     private SpikerState currentState = SpikerState.IDLE;
     private static Spiker _instance = getInstance();
     private Intake _intake = Intake.getInstance();
