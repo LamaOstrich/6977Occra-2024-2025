@@ -53,12 +53,12 @@ public class Spiker {
         }
     }
 
-    private void highSpike() {
+    private void farSpike() {
         _topMotor.set(ControlMode.PercentOutput, 0.8);
         _lowMotor.set(ControlMode.PercentOutput, 0.7);
     }
 
-    private void lowSpike() {
+    private void closeSpike() {
         _topMotor.set(ControlMode.PercentOutput, 0.8);
         _lowMotor.set(ControlMode.PercentOutput, 0.6);
     }
@@ -77,11 +77,11 @@ public class Spiker {
             case STANDBY:
                 standby();
                 break;
-            case SPIKE_HIGH:
-                highSpike();
+            case SPIKE_FAR:
+                farSpike();
                 break;
-            case SPIKE_LOW:
-                lowSpike();
+            case SPIKE_CLOSE:
+                closeSpike();
                 break;
             default:
                 idle();

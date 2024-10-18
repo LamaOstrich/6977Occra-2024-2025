@@ -88,16 +88,15 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // switch (m_autoSelected) {
-    //   case kCustomAuto:
-    //     // Put custom auto code here
-    //     break;
-    //   case kDefaultAuto:
-    //   default:
-    //     // Put default auto code here
-    //     break;
-    // }
-    _intake.handleState();
+    switch (m_autoSelected) {
+      case kTestAuto:
+        
+        break;
+      case kDefaultAuto:
+      default:
+        // Put default auto code here
+        break;
+    }
   }
 
   /** This function is called once when teleop is enabled. */
@@ -125,9 +124,9 @@ public class Robot extends TimedRobot {
 
   public void spikerTeleop() {
     if (operatorController.getYButton()) {
-      _spiker.setWantedState(SpikerState.SPIKE_HIGH);
+      _spiker.setWantedState(SpikerState.SPIKE_FAR);
     } else if (operatorController.getAButton()) {
-      _spiker.setWantedState(SpikerState.SPIKE_LOW);
+      _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
     }
   }
 

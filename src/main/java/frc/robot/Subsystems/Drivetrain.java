@@ -70,6 +70,24 @@ public class Drivetrain {
         }
     }
 
+    public void drive(double y, double z) {
+        if (z != 0 && y != 0) {
+            if (z < 0) {
+                _left1.set(ControlMode.PercentOutput, y * 1 + z);
+                _right1.set(ControlMode.PercentOutput, -y);
+            } else {
+                _left1.set(ControlMode.PercentOutput, y);
+                _right1.set(ControlMode.PercentOutput, -y * 1 - z);
+            }
+        } else if (VyCmd != 0) {
+            _left1.set(ControlMode.PercentOutput, y);
+            _right1.set(ControlMode.PercentOutput, -y);
+        }  else if (WzCmd != 0) {
+            _left1.set(ControlMode.PercentOutput, z);
+            _right1.set(ControlMode.PercentOutput, -z);
+        }
+    }
+
     public void odometry() {
         SmartDashboard.putNumber("foward percent", VyCmd);
         SmartDashboard.putNumber("turn percent", WzCmd);
