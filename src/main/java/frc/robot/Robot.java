@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
    private Drivetrain _drivetrain;
    private Intake _intake;
    private Spiker _spiker;
+   private Autos _auto;
    public static Timer timer= new Timer();
 
   @Override
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
     _drivetrain = Drivetrain.getInstance();
     _intake = Intake.getInstance();
     _spiker = Spiker.getInstance();
+    _auto = Autos.getInstance();
     _drivetrain.init();
     _intake.init();
     _spiker.init();
@@ -88,13 +90,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    m_autoSelected = m_chooser.getSelected();
     switch (m_autoSelected) {
       case kTestAuto:
-        
+        _auto.Test();
         break;
       case kDefaultAuto:
       default:
-        // Put default auto code here
+        _drivetrain.drive(.8, 0);
+        Timer.delay(2);
+        _drivetrain.drive(0, 0);
         break;
     }
   }

@@ -37,6 +37,7 @@ public class Autos {
     _intake.setWantedState(IntakeState.FEED);
     Timer.delay(.1);
     _spiker.setWantedState(SpikerState.IDLE);
+    _intake.setWantedState(IntakeState.INTAKE);
     _drivetrain.drive(1, 0);
     Timer.delay(4);
     _drivetrain.drive(0, 0);
@@ -48,6 +49,7 @@ public class Autos {
     _intake.setWantedState(IntakeState.FEED);
     Timer.delay(.1);
     _spiker.setWantedState(SpikerState.IDLE);
+    _intake.setWantedState(IntakeState.INTAKE);
     _drivetrain.drive(1, 0);
     Timer.delay(4);
     _drivetrain.drive(0,0);
