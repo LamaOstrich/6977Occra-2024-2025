@@ -45,7 +45,7 @@ public class Drivetrain {
 
         VyCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getLeftY());
 
-        WzCmd = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints, Constants.RotAxis_outputTable, _driverController.getRightY());
+        WzCmd = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints, Constants.RotAxis_outputTable, _driverController.getRightX());
 
         drive();
 
@@ -53,36 +53,28 @@ public class Drivetrain {
     }
 
     public void drive() {
-        if (WzCmd != 0 && VyCmd != 0) {
-            if (WzCmd < 0) {
-                _left1.set(ControlMode.PercentOutput, VyCmd * 1 + WzCmd);
-                _right1.set(ControlMode.PercentOutput, -VyCmd);
-            } else {
+        if (VyCmd != 0) {
+            if (WzCmd == 0) {
                 _left1.set(ControlMode.PercentOutput, VyCmd);
-                _right1.set(ControlMode.PercentOutput, -VyCmd * 1 - WzCmd);
-            }
-        } else if (VyCmd != 0) {
-            _left1.set(ControlMode.PercentOutput, VyCmd);
-            _right1.set(ControlMode.PercentOutput, -VyCmd);
-        }  else if (WzCmd != 0) {
-            _left1.set(ControlMode.PercentOutput, WzCmd);
+                _right1.set(ControlMode.PercentOutput, -VyCmd);
+            } else if (WzCmd < 0) {
+                _left1.set(ControlMode.PercentOutput, VyCmd);
+                _right1.set(ControlMode.PercentOutput, -VyCmd * (1 + WzCmd));
+            } else if (WzCmd > 0) {
+                _left1.set(ControlMode.PercentOutput, VyCmd * (1 - WzCmd));
+                _right1.set(ControlMode.PercentOutput, -VyCmd);
+            } 
+        } else {
+            _left1.set(ControlMode.PercentOutput, -WzCmd);
             _right1.set(ControlMode.PercentOutput, -WzCmd);
         }
     }
 
     public void drive(double y, double z) {
-        if (z != 0 && y != 0) {
-            if (z < 0) {
-                _left1.set(ControlMode.PercentOutput, y * 1 + z);
-                _right1.set(ControlMode.PercentOutput, -y);
-            } else {
-                _left1.set(ControlMode.PercentOutput, y);
-                _right1.set(ControlMode.PercentOutput, -y * 1 - z);
-            }
-        } else if (VyCmd != 0) {
+        if (y != 0) {
             _left1.set(ControlMode.PercentOutput, y);
             _right1.set(ControlMode.PercentOutput, -y);
-        }  else if (WzCmd != 0) {
+        }  else if (z != 0) {
             _left1.set(ControlMode.PercentOutput, z);
             _right1.set(ControlMode.PercentOutput, -z);
         }

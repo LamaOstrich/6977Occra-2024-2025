@@ -111,11 +111,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    _drivetrain.periodic();
     intakeTeleop();
     spikerTeleop();
     _intake.handleState();
     _spiker.handleState();
+    _drivetrain.periodic();
   }
 
   public void intakeTeleop(){
