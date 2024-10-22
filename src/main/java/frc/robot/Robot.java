@@ -4,6 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Enums.IntakeState;
+import frc.robot.Enums.SpikerState;
+import frc.robot.Subsystems.*;
+import frc.robot.Utilities.Constants;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
@@ -13,6 +23,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -20,27 +31,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  // private static final String kDefaultAuto = "Default";
-  // private static final String kCustomAuto = "My Auto";
-  // private String m_autoSelected;
-  // private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private XboxController controller = new XboxController(0);
-  private TalonSRXConfiguration _config = new TalonSRXConfiguration();
-  private TalonSRX motor = new TalonSRX(3);
-
-  /**
+  private static final String kDefaultAuto = "nothing";
+  private static final String kTestAuto = "test";
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+  private XboxController operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+  private Drivetrain _drivetrain;
+  private Intake _intake;
+  private Spiker _spiker;
+  private Autos _auto;
+  public static Timer timer= new Timer();
+  
+   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  
   @Override
   public void robotInit() {
-    // m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    // m_chooser.addOption("My Auto", kCustomAuto);
-    // SmartDashboard.putData("Auto choices", m_chooser);
-    _config.peakCurrentLimit = 30;
-    _config.peakCurrentDuration = 1000;
-    _config.continuousCurrentLimit = 20;
-    motor.configAllSettings(_config);
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("Test", kTestAuto);
+    SmartDashboard.putData("Auto choices", m_chooser);
+    Constants.defaultConfig.peakCurrentLimit = 35;
+    Constants.defaultConfig.peakCurrentDuration = 1000;
+    Constants.defaultConfig.continuousCurrentLimit = 30;
+    _drivetrain = Drivetrain.getInstance();
+    _intake = Intake.getInstance();
+    _spiker = Spiker.getInstance();
+    _auto = Autos.getInstance();
+    _drivetrain.init();
+    _intake.init();
+    _spiker.init();
   }
 
   /**
@@ -51,7 +73,10 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+
+  public void robotPeriodic() {
+    
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -65,23 +90,26 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    // m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    // System.out.println("Auto selected: " + m_autoSelected);
+    m_autoSelected = m_chooser.getSelected();
+    m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // switch (m_autoSelected) {
-    //   case kCustomAuto:
-    //     // Put custom auto code here
-    //     break;
-    //   case kDefaultAuto:
-    //   default:
-    //     // Put default auto code here
-    //     break;
-    // }
+    m_autoSelected = m_chooser.getSelected();
+    switch (m_autoSelected) {
+      case kTestAuto:
+        _auto.Test();
+        break;
+      case kDefaultAuto:
+      default:
+        _drivetrain.drive(.8, 0);
+        Timer.delay(2);
+        _drivetrain.drive(0, 0);
+        break;
+    }
   }
 
   /** This function is called once when teleop is enabled. */
@@ -93,7 +121,27 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    motor.set(ControlMode.PercentOutput, controller.getLeftY());
+    intakeTeleop();
+    spikerTeleop();
+    _intake.handleState();
+    _spiker.handleState();
+    _drivetrain.periodic();
+  }
+
+  public void intakeTeleop(){
+    if (driverController.getRightTriggerAxis() > .2 && _intake.isHolding()) {
+      _intake.setWantedState(IntakeState.FEED);
+    } else if (driverController.getBButton()) {
+      _intake.setWantedState(IntakeState.EJECT);
+    }
+  }
+
+  public void spikerTeleop() {
+    if (operatorController.getYButton()) {
+      _spiker.setWantedState(SpikerState.SPIKE_FAR);
+    } else if (operatorController.getAButton()) {
+      _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
+    }
   }
 
   /** This function is called once when the robot is disabled. */
