@@ -14,6 +14,16 @@ import frc.robot.Enums.SpikerState;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.Constants;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -22,23 +32,22 @@ import frc.robot.Utilities.Constants;
  */
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "nothing";
-   private static final String kTestAuto = "test";
+  private static final String kTestAuto = "test";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
-  /**
+  private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+  private XboxController operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+  private Drivetrain _drivetrain;
+  private Intake _intake;
+  private Spiker _spiker;
+  private Autos _auto;
+  public static Timer timer= new Timer();
+  
+   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-
-   private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
-   private XboxController operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
-   private Drivetrain _drivetrain;
-   private Intake _intake;
-   private Spiker _spiker;
-   private Autos _auto;
-   public static Timer timer= new Timer();
-
+  
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -64,6 +73,7 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
+
   public void robotPeriodic() {
     
   }
