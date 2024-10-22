@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Enums.IntakeState;
-import frc.robot.Enums.SpikerState;
 import frc.robot.Subsystems.*;
 import frc.robot.Utilities.Constants;
 
@@ -22,17 +20,9 @@ import frc.robot.Utilities.Constants;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "nothing";
-  private static final String kTestAuto = "test";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
-  private XboxController operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
   private Drivetrain _drivetrain;
-  private Intake _intake;
-  private Spiker _spiker;
-  private Autos _auto;
-  public static Timer timer= new Timer();
+  private boolean ran = true;
   
    /**
    * This function is run when the robot is first started up and should be used for any
@@ -41,19 +31,10 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("Test", kTestAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
     Constants.defaultConfig.peakCurrentLimit = 35;
     Constants.defaultConfig.peakCurrentDuration = 1000;
     Constants.defaultConfig.continuousCurrentLimit = 30;
     _drivetrain = Drivetrain.getInstance();
-    _intake = Intake.getInstance();
-    _spiker = Spiker.getInstance();
-    _auto = Autos.getInstance();
-    _drivetrain.init();
-    _intake.init();
-    _spiker.init();
   }
 
   /**
@@ -81,26 +62,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    ran = true;
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_autoSelected = m_chooser.getSelected();
-    switch (m_autoSelected) {
-      case kTestAuto:
-        _auto.Test();
-        break;
-      case kDefaultAuto:
-      default:
-        _drivetrain.drive(.8, 0);
-        Timer.delay(2);
-        _drivetrain.drive(0, 0);
-        break;
+    while (ran) {
+      _drivetrain.drive(.8, 0);
+      Timer.delay(.5);
+      _drivetrain.drive(0, 0);
+      ran = false;
     }
+    _drivetrain.drive(0,0);
   }
 
   /** This function is called once when teleop is enabled. */
@@ -112,27 +86,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    intakeTeleop();
-    spikerTeleop();
-    _intake.handleState();
-    _spiker.handleState();
     _drivetrain.periodic();
-  }
-
-  public void intakeTeleop(){
-    if (driverController.getRightTriggerAxis() > .2 && _intake.isHolding()) {
-      _intake.setWantedState(IntakeState.FEED);
-    } else if (driverController.getBButton()) {
-      _intake.setWantedState(IntakeState.EJECT);
-    }
-  }
-
-  public void spikerTeleop() {
-    if (operatorController.getYButton()) {
-      _spiker.setWantedState(SpikerState.SPIKE_FAR);
-    } else if (operatorController.getAButton()) {
-      _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
-    }
   }
 
   /** This function is called once when the robot is disabled. */
