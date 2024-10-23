@@ -26,12 +26,14 @@ public class Robot extends TimedRobot {
   private static final String kTestAuto = "test";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private XboxController driverController = new XboxController(Constants.kDriverControllerUsbSlot);
-  private XboxController operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
+  private XboxController _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
+  private XboxController _operatorController = new XboxController(Constants.kOperatorControllerUsbSlot);
   private Drivetrain _drivetrain;
   private Intake _intake;
   private Spiker _spiker;
   private Autos _auto;
+  private boolean _spike;
+  private boolean _spikeReleased;
   public static Timer timer = new Timer();
   
    /**
@@ -54,6 +56,9 @@ public class Robot extends TimedRobot {
     _drivetrain.init();
     _intake.init();
     _spiker.init();
+    _spike = false;
+    _spikeReleased = false;
+    
   }
 
   /**
@@ -112,6 +117,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    _spike = Math.abs(_driverController.getRightTriggerAxis()) > 0.25;
     intakeTeleop();
     spikerTeleop();
     _intake.handleState();
@@ -120,18 +126,25 @@ public class Robot extends TimedRobot {
   }
 
   public void intakeTeleop(){
-    if (driverController.getRightTriggerAxis() > .2 && _intake.isHolding()) {
+    if (_spike && _intake.isHolding()) {
       _intake.setWantedState(IntakeState.FEED);
-    } else if (driverController.getBButton()) {
-      _intake.setWantedState(IntakeState.EJECT);
+    } else if (_spikeReleased) {
+      _spiker.setWantedState(SpikerState.IDLE);
+      _intake.setWantedState(IntakeState.INTAKE);
     }
+    if (_driverController.getBButton()) {
+      _intake.setWantedState(IntakeState.EJECT);
+    } else if (_driverController.getBButtonReleased()) {
+      _intake.setWantedState(IntakeState.INTAKE);
+    }
+    _spikeReleased = _spike;
     SmartDashboard.putBoolean("isHolding", _intake.isHolding());
   }
 
   public void spikerTeleop() {
-    if (operatorController.getYButton()) {
+    if (_operatorController.getYButton()) {
       _spiker.setWantedState(SpikerState.SPIKE_FAR);
-    } else if (operatorController.getAButton()) {
+    } else if (_operatorController.getAButton()) {
       _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
     }
   }
