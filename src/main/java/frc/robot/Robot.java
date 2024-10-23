@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private Intake _intake;
   private Spiker _spiker;
   private Autos _auto;
-  public static Timer timer= new Timer();
+  public static Timer timer = new Timer();
   
    /**
    * This function is run when the robot is first started up and should be used for any
@@ -125,6 +125,7 @@ public class Robot extends TimedRobot {
     } else if (driverController.getBButton()) {
       _intake.setWantedState(IntakeState.EJECT);
     }
+    SmartDashboard.putBoolean("isHolding", _intake.isHolding());
   }
 
   public void spikerTeleop() {

@@ -1,6 +1,7 @@
 package frc.robot.Utilities;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
 
 public class Constants {
     
@@ -10,14 +11,14 @@ public class Constants {
     public static final int kLeft2DriveMotor = 3;
     public static final int kRight1DriveMotor = 4;
     public static final int kRight2DriveMotor = 5;
-    public static final int kIntakeFrontMotor = 6;
-    public static final int kIntakeBackMotor = 7;
-    public static final int kSpikerTopMotor = 8;
-    public static final int kSpikerLowMotor = 9;
+    public static final int kIntakeMotor = 6;
+    public static final int kSpikerTopMotor = 7;
+    public static final int kSpikerLowMotor = 8;
 
     public static final int kPhotoEyeChannel = 1;
 
     public static TalonSRXConfiguration defaultConfig = new TalonSRXConfiguration();
+    public static VictorSPXConfiguration defaultSPXConfig = new VictorSPXConfiguration();
     
     public static final double kDeadband = 0.15;
     public static final double[] XY_Axis_inputBreakpoints =  {-1,  -0.9, -0.85, -0.7, -0.6, -0.5, -0.2,  -0.12, 0.12, 0.2,  0.5, 0.6, 0.7, 0.85, .9, 1};

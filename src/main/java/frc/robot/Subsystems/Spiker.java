@@ -1,24 +1,24 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import frc.robot.Enums.SpikerState;
 import frc.robot.Utilities.Constants;
 
 public class Spiker {
 
-    private TalonSRX _topMotor;
-    private TalonSRX _lowMotor;
+    private VictorSPX _topMotor;
+    private VictorSPX _lowMotor;
     private SpikerState currentState = SpikerState.IDLE;
     private static Spiker _instance = getInstance();
     private Intake _intake = Intake.getInstance();
 
     public Spiker() {
-        _topMotor = new TalonSRX(Constants.kSpikerTopMotor);
-        _lowMotor = new TalonSRX(Constants.kSpikerLowMotor);
-        _topMotor.configAllSettings(Constants.defaultConfig);
-        _lowMotor.configAllSettings(Constants.defaultConfig);
+        _topMotor = new VictorSPX(Constants.kSpikerTopMotor);
+        _lowMotor = new VictorSPX(Constants.kSpikerLowMotor);
+        _topMotor.configAllSettings(Constants.defaultSPXConfig);
+        _lowMotor.configAllSettings(Constants.defaultSPXConfig);
     }
 
     public static Spiker getInstance() {
@@ -29,8 +29,8 @@ public class Spiker {
     }
 
     public void init() {
-        _topMotor.configAllSettings(Constants.defaultConfig);
-        _lowMotor.configAllSettings(Constants.defaultConfig);
+        _topMotor.configAllSettings(Constants.defaultSPXConfig);
+        _lowMotor.configAllSettings(Constants.defaultSPXConfig);
         _lowMotor.setInverted(true);
     }
 
