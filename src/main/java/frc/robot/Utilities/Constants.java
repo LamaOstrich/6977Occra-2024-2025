@@ -10,10 +10,9 @@ public class Constants {
     public static final int kLeft2DriveMotor = 3;
     public static final int kRight1DriveMotor = 4;
     public static final int kRight2DriveMotor = 5;
-    public static final int kIntakeFrontMotor = 6;
-    public static final int kIntakeBackMotor = 7;
-    public static final int kSpikerTopMotor = 8;
-    public static final int kSpikerLowMotor = 9;
+    public static final int kIntakeMotor = 6;
+    public static final int kSpikerTopMotor = 7;
+    public static final int kSpikerLowMotor = 8;
 
     public static final int kPhotoEyeChannel = 1;
 

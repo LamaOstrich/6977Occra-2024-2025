@@ -11,8 +11,7 @@ import frc.robot.Utilities.Constants;
 
 public class Intake {
     private final double kPhotoEyeDebounceTime = 0.04;
-    private TalonSRX _frontMotor;
-    private TalonSRX _backMotor;
+    private TalonSRX _motor;
     private DigitalInput _photoEye = new DigitalInput(Constants.kPhotoEyeChannel);
     private Debouncer debouncer = new Debouncer(kPhotoEyeDebounceTime, DebounceType.kRising);
     // private IntakeState previousState = IntakeState.IDLE;
@@ -20,15 +19,12 @@ public class Intake {
     private static Intake _instance;
 
     public Intake() {
-    _frontMotor = new TalonSRX(6);
-    _backMotor = new TalonSRX(7);
-    _frontMotor.configAllSettings(Constants.defaultConfig);
-    _backMotor.configAllSettings(Constants.defaultConfig);
+    _motor = new TalonSRX(Constants.kIntakeMotor);
+    _motor.configAllSettings(Constants.defaultConfig);
     }
 
     public void init() {
-        _frontMotor.configAllSettings(Constants.defaultConfig);
-        _backMotor.configAllSettings(Constants.defaultConfig);
+        _motor.configAllSettings(Constants.defaultConfig);
     }
 
     public static Intake getInstance() {
@@ -40,8 +36,7 @@ public class Intake {
 
     private void idle() {
         if (isHolding()) {
-            _frontMotor.set(ControlMode.PercentOutput, 0.0);
-            _backMotor.set(ControlMode.PercentOutput, 0.0);
+            _motor.set(ControlMode.PercentOutput, 0.0);
         } else {
             setWantedState(IntakeState.INTAKE);
         }
@@ -49,21 +44,18 @@ public class Intake {
 
     private void intake() {
         if(!isHolding()) {
-            _frontMotor.set(ControlMode.PercentOutput, .5);
-            _backMotor.set(ControlMode.PercentOutput, .5);
+            _motor.set(ControlMode.PercentOutput, .6);
         } else {
             setWantedState(IntakeState.IDLE);
         }
     }
 
     private void eject() {
-        _frontMotor.set(ControlMode.PercentOutput, -.5);
-        _backMotor.set(ControlMode.PercentOutput, -.5);
+        _motor.set(ControlMode.PercentOutput, -.5);
     }
 
     private void feed() {
-        _frontMotor.set(ControlMode.PercentOutput, 0.0);
-        _frontMotor.set(ControlMode.PercentOutput, .5);
+        _motor.set(ControlMode.PercentOutput, .7);
     }
 
     public void setWantedState(IntakeState state) {
