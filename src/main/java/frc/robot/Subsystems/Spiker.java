@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Enums.SpikerState;
 import frc.robot.Utilities.Constants;
 
@@ -32,6 +33,7 @@ public class Spiker {
         _topMotor.configAllSettings(Constants.defaultSPXConfig);
         _lowMotor.configAllSettings(Constants.defaultSPXConfig);
         _lowMotor.setInverted(true);
+        setWantedState(SpikerState.IDLE);
     }
 
     private void idle() {
@@ -45,8 +47,8 @@ public class Spiker {
 
     private void standby() {
         if (_intake.isHolding()) {
-            _topMotor.set(ControlMode.PercentOutput, 0.5);
-            _lowMotor.set(ControlMode.PercentOutput, 0.5);
+            _topMotor.set(ControlMode.PercentOutput, 0.4);
+            _lowMotor.set(ControlMode.PercentOutput, 0.4);
         } else {
             setWantedState(SpikerState.IDLE);
         }
@@ -69,6 +71,7 @@ public class Spiker {
     }
 
     public void handleState() {
+        SmartDashboard.putString("spiker state", currentState.name());
         switch(currentState) {
             case IDLE:
                 idle();

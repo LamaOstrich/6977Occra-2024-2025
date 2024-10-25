@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Enums.IntakeState;
 import frc.robot.Utilities.Constants;
 
@@ -19,13 +20,14 @@ public class Intake {
     private static Intake _instance;
 
     public Intake() {
-    _motor = new VictorSPX(6);
+    _motor = new VictorSPX(Constants.kIntakeMotor);
     // _motor.configAllSettings(Constants.defaultConfig);
     _motor.configAllSettings(Constants.defaultSPXConfig);
     }
 
     public void init() {
         _motor.configAllSettings(Constants.defaultSPXConfig);
+        setWantedState(IntakeState.IDLE);
     }
 
     public static Intake getInstance() {
@@ -44,7 +46,7 @@ public class Intake {
     }
 
     private void intake() {
-        if(!isHolding()) {
+        if (!isHolding()) {
             _motor.set(ControlMode.PercentOutput, .5);
         } else {
             setWantedState(IntakeState.IDLE);
@@ -66,6 +68,7 @@ public class Intake {
     }
 
     public void handleState() {
+        SmartDashboard.putString("intake state", currentState.name());
         switch(currentState) {
             case IDLE: 
                 idle();
@@ -86,6 +89,6 @@ public class Intake {
     }
 
     public Boolean isHolding() {
-        return debouncer.calculate(_photoEye.get());
+        return !debouncer.calculate(_photoEye.get());
     }
 }
