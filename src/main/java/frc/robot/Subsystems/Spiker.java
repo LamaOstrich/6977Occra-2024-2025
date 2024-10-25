@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Enums.SpikerState;
 import frc.robot.Utilities.Constants;
 
@@ -31,7 +32,7 @@ public class Spiker {
     public void init() {
         _topMotor.configAllSettings(Constants.defaultConfig);
         _lowMotor.configAllSettings(Constants.defaultConfig);
-        _lowMotor.setInverted(true);
+        _lowMotor.setInverted(false);
     }
 
     private void idle() {
@@ -53,12 +54,12 @@ public class Spiker {
     }
 
     private void farSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 0.8);
+        _topMotor.set(ControlMode.PercentOutput, 1);
         _lowMotor.set(ControlMode.PercentOutput, 0.7);
     }
 
     private void closeSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 0.8);
+        _topMotor.set(ControlMode.PercentOutput, 1);
         _lowMotor.set(ControlMode.PercentOutput, 0.6);
     }
 
@@ -69,6 +70,7 @@ public class Spiker {
     }
 
     public void handleState() {
+        SmartDashboard.putString("spike state", currentState.name());
         switch(currentState) {
             case IDLE:
                 idle();

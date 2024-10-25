@@ -1,16 +1,18 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Enums.IntakeState;
 import frc.robot.Utilities.Constants;
 
 public class Intake {
-    private final double kPhotoEyeDebounceTime = 0.04;
+    private final double kPhotoEyeDebounceTime = 0.02;
     private TalonSRX _motor;
     private DigitalInput _photoEye = new DigitalInput(Constants.kPhotoEyeChannel);
     private Debouncer debouncer = new Debouncer(kPhotoEyeDebounceTime, DebounceType.kRising);
@@ -25,6 +27,7 @@ public class Intake {
 
     public void init() {
         _motor.configAllSettings(Constants.defaultConfig);
+        _motor.setNeutralMode(NeutralMode.Brake);
     }
 
     public static Intake getInstance() {
@@ -44,7 +47,7 @@ public class Intake {
 
     private void intake() {
         if(!isHolding()) {
-            _motor.set(ControlMode.PercentOutput, .6);
+            _motor.set(ControlMode.PercentOutput, .45);
         } else {
             setWantedState(IntakeState.IDLE);
         }
@@ -65,6 +68,7 @@ public class Intake {
     }
 
     public void handleState() {
+        SmartDashboard.putString("intake state", currentState.name());
         switch(currentState) {
             case IDLE: 
                 idle();
@@ -85,6 +89,6 @@ public class Intake {
     }
 
     public Boolean isHolding() {
-        return debouncer.calculate(_photoEye.get());
+        return !debouncer.calculate(_photoEye.get());
     }
 }
