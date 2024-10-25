@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.filter.Debouncer;
@@ -11,7 +12,7 @@ import frc.robot.Enums.IntakeState;
 import frc.robot.Utilities.Constants;
 
 public class Intake {
-    private final double kPhotoEyeDebounceTime = 0.04;
+    private final double kPhotoEyeDebounceTime = 0.02;
     private VictorSPX _motor;
     private DigitalInput _photoEye = new DigitalInput(Constants.kPhotoEyeChannel);
     private Debouncer debouncer = new Debouncer(kPhotoEyeDebounceTime, DebounceType.kRising);
@@ -22,6 +23,8 @@ public class Intake {
     public Intake() {
     _motor = new VictorSPX(Constants.kIntakeMotor);
     // _motor.configAllSettings(Constants.defaultConfig);
+    _motor.setInverted(true);
+    _motor.setNeutralMode(NeutralMode.Brake);
     _motor.configAllSettings(Constants.defaultSPXConfig);
     }
 
@@ -47,7 +50,7 @@ public class Intake {
 
     private void intake() {
         if (!isHolding()) {
-            _motor.set(ControlMode.PercentOutput, .5);
+            _motor.set(ControlMode.PercentOutput, .4);
         } else {
             setWantedState(IntakeState.IDLE);
         }

@@ -47,21 +47,31 @@ public class Spiker {
 
     private void standby() {
         if (_intake.isHolding()) {
-            _topMotor.set(ControlMode.PercentOutput, 0.4);
-            _lowMotor.set(ControlMode.PercentOutput, 0.4);
+            _topMotor.set(ControlMode.PercentOutput, 0.3);
+            _lowMotor.set(ControlMode.PercentOutput, 0.3);
         } else {
             setWantedState(SpikerState.IDLE);
         }
     }
 
     private void farSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 0.8);
-        _lowMotor.set(ControlMode.PercentOutput, 0.7);
+        _topMotor.set(ControlMode.PercentOutput, 0.7);
+        _lowMotor.set(ControlMode.PercentOutput, 0.6);
     }
 
     private void closeSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 0.8);
-        _lowMotor.set(ControlMode.PercentOutput, 0.6);
+        _topMotor.set(ControlMode.PercentOutput, 0.7);
+        _lowMotor.set(ControlMode.PercentOutput, 0.5);
+    }
+
+    private void intakebad() {
+        _topMotor.set(ControlMode.PercentOutput, -.4);
+        _lowMotor.set(ControlMode.PercentOutput, -.4);
+    }
+
+    private void feed() {
+        _topMotor.set(ControlMode.PercentOutput, -.6);
+        _lowMotor.set(ControlMode.PercentOutput, .6);
     }
 
     public void setWantedState(SpikerState state) {
@@ -85,6 +95,11 @@ public class Spiker {
             case SPIKE_CLOSE:
                 closeSpike();
                 break;
+            case INTAKE_BAD:
+                intakebad();
+                break;
+            case FEED:
+                feed();
             default:
                 idle();
                 break;

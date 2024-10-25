@@ -4,5 +4,7 @@ public enum SpikerState {
     IDLE,
     STANDBY,
     SPIKE_FAR,
-    SPIKE_CLOSE
+    SPIKE_CLOSE,
+    INTAKE_BAD,
+    FEED
 }

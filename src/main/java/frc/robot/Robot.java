@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    
+
   }
 
   /** This function is called periodically during operator control. */
@@ -137,6 +137,11 @@ public class Robot extends TimedRobot {
     } else if (_driverController.getBButtonReleased()) {
       _intake.setWantedState(IntakeState.INTAKE);
     }
+    if (_driverController.getAButton()) {
+      _spiker.setWantedState(SpikerState.INTAKE_BAD);
+    } else if (_driverController.getAButtonPressed()) {
+      _spiker.setWantedState(SpikerState.IDLE);
+    }
     _spikeReleased = _spike;
     SmartDashboard.putBoolean("isHolding", _intake.isHolding());
   }
@@ -146,7 +151,9 @@ public class Robot extends TimedRobot {
       _spiker.setWantedState(SpikerState.SPIKE_FAR);
     } else if (_operatorController.getAButton()) {
       _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
-    }
+    } else if (_operatorController.getStartButton()) {
+      _spiker.setWantedState(SpikerState.IDLE);
+    } 
   }
 
   /** This function is called once when the robot is disabled. */
