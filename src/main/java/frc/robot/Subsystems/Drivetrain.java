@@ -74,6 +74,9 @@ public class Drivetrain {
         }  else if (z != 0) {
             _left1.set(ControlMode.PercentOutput, z);
             _right1.set(ControlMode.PercentOutput, -z);
+        } else {
+            _left1.set(ControlMode.PercentOutput, 0);
+            _right1.set(ControlMode.PercentOutput, 0);
         }
     }
 
