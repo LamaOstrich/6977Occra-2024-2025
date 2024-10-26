@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
@@ -23,6 +24,7 @@ public class Intake {
     public Intake() {
     _motor = new TalonSRX(Constants.kIntakeMotor);
     _motor.configAllSettings(Constants.defaultConfig);
+    
     }
 
     public void init() {
@@ -46,7 +48,11 @@ public class Intake {
     }
 
     private void intake() {
+        if (!isHolding()) {
         _motor.set(ControlMode.PercentOutput, .45);
+        } else {
+            setWantedState(IntakeState.IDLE);
+        }
     }
 
     private void eject() {
