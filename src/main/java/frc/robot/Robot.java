@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
       case kDefaultAuto:
       default:
         _drivetrain.drive(.8, 0);
-        Timer.delay(2);
+        Timer.delay(.7);
         _drivetrain.drive(0, 0);
         break;
     }
