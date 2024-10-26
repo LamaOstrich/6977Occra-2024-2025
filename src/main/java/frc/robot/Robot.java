@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
   private Autos _auto;
   private boolean _spike;
   private boolean _spikeReleased;
+  private boolean ran;
   public static Timer timer = new Timer();
   
    /**
@@ -58,7 +59,7 @@ public class Robot extends TimedRobot {
     _spiker.init();
     _spike = false;
     _spikeReleased = false;
-    
+    ran = true;
   }
 
   /**
@@ -89,22 +90,26 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    ran = true;
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
     m_autoSelected = m_chooser.getSelected();
-    switch (m_autoSelected) {
-      case kTestAuto:
-        _auto.Test();
-        break;
-      case kDefaultAuto:
-      default:
-        _drivetrain.drive(.65, 0);
-        Timer.delay(.1);
-        _drivetrain.drive(0, 0);
-        break;
+    if (ran) {
+      switch (m_autoSelected) {
+        case kTestAuto:
+          _auto.Test();
+          break;
+        case kDefaultAuto:
+        default:
+          _drivetrain.drive(.65, 0);
+          Timer.delay(.4);
+          _drivetrain.drive(0, 0);
+          break;
+      }
+      ran = false;
     }
     _drivetrain.drive(0, 0);
   }
