@@ -38,11 +38,11 @@ public class Autos {
     Timer.delay(.1);
     _spiker.setWantedState(SpikerState.IDLE);
     _intake.setWantedState(IntakeState.INTAKE);
-    _drivetrain.drive(1, 0);
+    _drivetrain.drive(-1, 0);
     Timer.delay(.7);
     _drivetrain.drive(0, 0);
     Timer.delay(.1);
-    _drivetrain.drive(-1, 0);
+    _drivetrain.drive(1, 0);
     Timer.delay(.65);
     _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
     Timer.delay(.2);
@@ -50,7 +50,7 @@ public class Autos {
     Timer.delay(.1);
     _spiker.setWantedState(SpikerState.IDLE);
     _intake.setWantedState(IntakeState.INTAKE);
-    _drivetrain.drive(1, 0);
+    _drivetrain.drive(-1, 0);
     Timer.delay(.6);
     _drivetrain.drive(0,0);
    }

@@ -54,15 +54,14 @@ public class Spiker {
     }
 
     private void farSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 1);
-        _lowMotor.set(ControlMode.PercentOutput, 0.7);
+        _topMotor.set(ControlMode.PercentOutput, .8);
+        _lowMotor.set(ControlMode.PercentOutput, 1);
     }
 
     private void closeSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 1);
-        _lowMotor.set(ControlMode.PercentOutput, 0.6);
+        _topMotor.set(ControlMode.PercentOutput, .6);
+        _lowMotor.set(ControlMode.PercentOutput, 1);
     }
-
     public void setWantedState(SpikerState state) {
         if (currentState != state) {
             currentState = state;
