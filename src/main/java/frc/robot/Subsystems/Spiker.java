@@ -20,6 +20,7 @@ public class Spiker {
         _lowMotor = new TalonSRX(Constants.kSpikerLowMotor);
         _topMotor.configAllSettings(Constants.defaultConfig);
         _lowMotor.configAllSettings(Constants.defaultConfig);
+        
     }
 
     public static Spiker getInstance() {
@@ -32,7 +33,8 @@ public class Spiker {
     public void init() {
         _topMotor.configAllSettings(Constants.defaultConfig);
         _lowMotor.configAllSettings(Constants.defaultConfig);
-        _lowMotor.setInverted(false);
+        _lowMotor.setInverted(true);
+        _topMotor.setInverted(false);
     }
 
     private void idle() {
