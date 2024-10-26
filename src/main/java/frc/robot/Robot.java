@@ -139,7 +139,7 @@ public class Robot extends TimedRobot {
     }
     if (_driverController.getAButton()) {
       _spiker.setWantedState(SpikerState.INTAKE_BAD);
-    } else if (_driverController.getAButtonPressed()) {
+    } else if (_driverController.getAButtonReleased()) {
       _spiker.setWantedState(SpikerState.IDLE);
     }
     _spikeReleased = _spike;
@@ -151,6 +151,8 @@ public class Robot extends TimedRobot {
       _spiker.setWantedState(SpikerState.SPIKE_FAR);
     } else if (_operatorController.getAButton()) {
       _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
+    } else if (_operatorController.getBButton()) {
+      _spiker.setWantedState(SpikerState.FEED);
     } else if (_operatorController.getStartButton()) {
       _spiker.setWantedState(SpikerState.IDLE);
     } 
