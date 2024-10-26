@@ -100,11 +100,12 @@ public class Robot extends TimedRobot {
         break;
       case kDefaultAuto:
       default:
-        _drivetrain.drive(.8, 0);
-        Timer.delay(.7);
+        _drivetrain.drive(.5, 0);
+        Timer.delay(.1);
         _drivetrain.drive(0, 0);
         break;
     }
+    _drivetrain.drive(0,0);
   }
 
   /** This function is called once when teleop is enabled. */

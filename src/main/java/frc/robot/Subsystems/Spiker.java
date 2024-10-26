@@ -33,8 +33,6 @@ public class Spiker {
     public void init() {
         _topMotor.configAllSettings(Constants.defaultConfig);
         _lowMotor.configAllSettings(Constants.defaultConfig);
-        _lowMotor.setInverted(true);
-        _topMotor.setInverted(false);
     }
 
     private void idle() {
@@ -50,14 +48,12 @@ public class Spiker {
         if (_intake.isHolding()) {
             _topMotor.set(ControlMode.PercentOutput, 0.5);
             _lowMotor.set(ControlMode.PercentOutput, 0.5);
-        } else {
-            setWantedState(SpikerState.IDLE);
         }
     }
 
     private void farSpike() {
         _topMotor.set(ControlMode.PercentOutput, .8);
-        _lowMotor.set(ControlMode.PercentOutput, 1);
+        _lowMotor.set(ControlMode.PercentOutput, -1);
     }
 
     private void closeSpike() {

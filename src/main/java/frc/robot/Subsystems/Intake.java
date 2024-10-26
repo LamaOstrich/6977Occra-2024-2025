@@ -46,11 +46,7 @@ public class Intake {
     }
 
     private void intake() {
-        if(!isHolding()) {
-            _motor.set(ControlMode.PercentOutput, .45);
-        } else {
-            setWantedState(IntakeState.IDLE);
-        }
+        _motor.set(ControlMode.PercentOutput, .45);
     }
 
     private void eject() {
