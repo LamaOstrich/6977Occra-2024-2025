@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
   }
 
   public void intakeTeleop(){
-    if (_spike && _intake.isHolding()) {
+    if (_spike) {
       _intake.setWantedState(IntakeState.FEED);
     } else if (_spikeReleased) {
       _spiker.setWantedState(SpikerState.IDLE);
