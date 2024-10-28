@@ -48,6 +48,8 @@ public class Spiker {
         if (_intake.isHolding()) {
             _topMotor.set(ControlMode.PercentOutput, 0.5);
             _lowMotor.set(ControlMode.PercentOutput, 0.5);
+        } else {
+            setWantedState(SpikerState.IDLE);
         }
     }
 
