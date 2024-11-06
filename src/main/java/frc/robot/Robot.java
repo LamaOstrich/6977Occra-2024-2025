@@ -152,6 +152,8 @@ public class Robot extends TimedRobot {
       _spiker.setWantedState(SpikerState.SPIKE_FAR);
     } else if (_operatorController.getAButton()) {
       _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
+    } else if (_operatorController.getStartButton()) {
+      _spiker.setWantedState(SpikerState.IDLE);
     }
   }
 
