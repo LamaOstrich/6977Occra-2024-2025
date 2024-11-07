@@ -4,5 +4,6 @@ public enum IntakeState {
     IDLE,
     INTAKE,
     EJECT,
-    FEED
+    FEED,
+    FORCE_IDLE
 }

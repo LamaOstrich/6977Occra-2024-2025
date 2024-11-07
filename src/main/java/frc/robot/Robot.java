@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("Test", kTestAuto);
+    m_chooser.addOption("Special", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     Constants.defaultConfig.peakCurrentLimit = 35;
     Constants.defaultConfig.peakCurrentDuration = 1000;
@@ -104,6 +104,16 @@ public class Robot extends TimedRobot {
           break;
         case kDefaultAuto:
         default:
+          _spiker.setWantedState(SpikerState.SPIKE_FAR);
+          _spiker.handleState();
+          Timer.delay(.4);
+          _intake.setWantedState(IntakeState.FEED);
+          _intake.handleState();
+          Timer.delay(.4);
+          _intake.setWantedState(IntakeState.INTAKE);
+          _spiker.setWantedState(SpikerState.IDLE);
+          _intake.handleState();
+          _spiker.handleState();
           _drivetrain.drive(.7, 0);
           Timer.delay(1);
           _drivetrain.drive(0, 0);
@@ -117,7 +127,8 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-
+    _intake.setWantedState(IntakeState.IDLE);
+    _spiker.setWantedState(SpikerState.IDLE);
   }
 
   /** This function is called periodically during operator control. */

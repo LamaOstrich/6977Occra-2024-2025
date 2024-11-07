@@ -33,25 +33,36 @@ public class Autos {
 
    public void Test() {
     _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
-    Timer.delay(.2);
+    _spiker.handleState();
+    Timer.delay(.4);
     _intake.setWantedState(IntakeState.FEED);
-    Timer.delay(.1);
+    _intake.handleState();
+    Timer.delay(.4);
     _spiker.setWantedState(SpikerState.IDLE);
     _intake.setWantedState(IntakeState.INTAKE);
-    _drivetrain.drive(-1, 0);
-    Timer.delay(.7);
+    _intake.handleState();
+    _spiker.handleState();
+    _drivetrain.drive(.8, 0);
+    Timer.delay(1.0);
     _drivetrain.drive(0, 0);
-    Timer.delay(.1);
-    _drivetrain.drive(1, 0);
-    Timer.delay(.65);
+    Timer.delay(1);
+    _drivetrain.drive(-.75, 0);
+    _intake.setWantedState(IntakeState.FORCE_IDLE);
+    _intake.handleState();
+    Timer.delay(1);
+    _drivetrain.drive(0, 0);
     _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
-    Timer.delay(.2);
+    _spiker.handleState();
+    Timer.delay(.4);
     _intake.setWantedState(IntakeState.FEED);
-    Timer.delay(.1);
+    _intake.handleState();
+    Timer.delay(.4);
     _spiker.setWantedState(SpikerState.IDLE);
     _intake.setWantedState(IntakeState.INTAKE);
-    _drivetrain.drive(-1, 0);
-    Timer.delay(.6);
+    _intake.handleState();
+    _spiker.handleState();
+    _drivetrain.drive(.65, 0);
+    Timer.delay(.85);
     _drivetrain.drive(0,0);
    }
 }

@@ -60,7 +60,7 @@ public class Spiker {
     }
 
     private void closeSpike() {
-        _topMotor.set(ControlMode.PercentOutput, .6);
+        _topMotor.set(ControlMode.PercentOutput, 1);
         _lowMotor.set(ControlMode.PercentOutput, 1);
     }
     public void setWantedState(SpikerState state) {
