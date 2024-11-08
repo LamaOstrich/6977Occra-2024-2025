@@ -32,7 +32,7 @@ public class Spiker {
     public void init() {
         _topMotor.configAllSettings(Constants.defaultSPXConfig);
         _lowMotor.configAllSettings(Constants.defaultSPXConfig);
-        _lowMotor.setInverted(true);
+        _lowMotor.setInverted(false);
         setWantedState(SpikerState.IDLE);
     }
 
