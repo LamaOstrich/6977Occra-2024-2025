@@ -55,8 +55,8 @@ public class Spiker {
     }
 
     private void farSpike() {
-        _topMotor.set(ControlMode.PercentOutput, 0.7);
-        _lowMotor.set(ControlMode.PercentOutput, 0.6);
+        _topMotor.set(ControlMode.PercentOutput, 0.8);
+        _lowMotor.set(ControlMode.PercentOutput, 0.7);
     }
 
     private void closeSpike() {
