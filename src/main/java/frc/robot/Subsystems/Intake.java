@@ -50,7 +50,7 @@ public class Intake {
 
     private void intake() {
         if (!isHolding()) {
-            _motor.set(ControlMode.PercentOutput, .75);
+            _motor.set(ControlMode.PercentOutput, .9);
         } else {
             setWantedState(IntakeState.IDLE);
         }
