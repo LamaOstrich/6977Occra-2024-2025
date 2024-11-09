@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
         _spiker.setWantedState(SpikerState.SPIKE_FAR);
         _spiker.handleState();
         _drivetrain.drive(.5, 0);
-        Timer.delay(.2);
+        Timer.delay(.5);
         _drivetrain.drive(0, 0);
         _intake.setWantedState(IntakeState.FEED);
         _intake.handleState();
