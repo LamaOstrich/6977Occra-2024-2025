@@ -32,7 +32,7 @@ public class Autos {
     }
 
    public void Test() {
-    _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
+    _spiker.setWantedState(SpikerState.SPIKE_FAR);
     _spiker.handleState();
     Timer.delay(.4);
     _intake.setWantedState(IntakeState.FEED);
@@ -51,7 +51,7 @@ public class Autos {
     _intake.handleState();
     Timer.delay(1);
     _drivetrain.drive(0, 0);
-    _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
+    _spiker.setWantedState(SpikerState.SPIKE_FAR);
     _spiker.handleState();
     Timer.delay(.4);
     _intake.setWantedState(IntakeState.FEED);
