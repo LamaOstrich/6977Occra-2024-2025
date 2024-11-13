@@ -23,7 +23,6 @@ public class Autos {
     _spiker.init();
    }
 
-
    public static Autos getInstance() {
     if (_instance == null) {
         _instance = new Autos();
@@ -32,20 +31,30 @@ public class Autos {
     }
 
    public void Test() {
+    _drivetrain.drive(.5, 0);
     _spiker.setWantedState(SpikerState.SPIKE_FAR);
     _spiker.handleState();
-    _drivetrain.drive(.1, 0);
-    Timer.delay(.4);
+    Timer.delay(.3);
+    _drivetrain.drive(-.2, 0);
+    Timer.delay(.2);
     _drivetrain.drive(0, 0);
     _intake.setWantedState(IntakeState.FEED);
     _intake.handleState();
+    // _spiker.setWantedState(SpikerState.SPIKE_FAR);
+    // _spiker.handleState();
+    // _drivetrain.drive(.5, 0);
+    // Timer.delay(.2);
+    // _drivetrain.drive(0, 0);
+    // Timer.delay(.4);
+    // _intake.setWantedState(IntakeState.FEED);
+    // _intake.handleState();
     Timer.delay(.4);
     _spiker.setWantedState(SpikerState.IDLE);
     _intake.setWantedState(IntakeState.INTAKE);
     _intake.handleState();
     _spiker.handleState();
-    _drivetrain.drive(.6, 0);
-    Timer.delay(.6);
+    _drivetrain.drive(.7, 0);
+    Timer.delay(.8);
     _drivetrain.drive(0, 0);
     _intake.setWantedState(IntakeState.FORCE_IDLE);
     _intake.handleState();

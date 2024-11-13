@@ -14,8 +14,8 @@ public class Drivetrain {
     private TalonSRX _right1 = new TalonSRX(frc.robot.Utilities.Constants.kRight1DriveMotor);
     private TalonSRX _right2 = new TalonSRX(frc.robot.Utilities.Constants.kRight2DriveMotor);
     // private double VxCmd;
-    private double VyCmd;
-    private double WzCmd;
+    private double LVyCmd;
+    private double RVyCmd;
     private XboxController _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     private static Drivetrain _instance;
     
@@ -41,11 +41,10 @@ public class Drivetrain {
     }
 
     public void periodic() {
-        // VxCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getLeftY());
 
-        VyCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getLeftY());
+        LVyCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getLeftY());
 
-        WzCmd = -OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints, Constants.RotAxis_outputTable, _driverController.getRightX());
+        RVyCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getRightY());
 
         drive();
 
@@ -53,21 +52,8 @@ public class Drivetrain {
     }
 
     public void drive() {
-        if (VyCmd != 0) {
-            if (WzCmd == 0) {
-                _left1.set(ControlMode.PercentOutput, VyCmd);
-                _right1.set(ControlMode.PercentOutput, -VyCmd);
-            } else if (WzCmd < 0) {
-                _left1.set(ControlMode.PercentOutput, VyCmd);
-                _right1.set(ControlMode.PercentOutput, -VyCmd * (1 + WzCmd));
-            } else if (WzCmd > 0) {
-                _left1.set(ControlMode.PercentOutput, VyCmd * (1 - WzCmd));
-                _right1.set(ControlMode.PercentOutput, -VyCmd);
-            } 
-        } else {
-            _left1.set(ControlMode.PercentOutput, -WzCmd);
-            _right1.set(ControlMode.PercentOutput, -WzCmd);
-        }
+        _left1.set(ControlMode.PercentOutput, LVyCmd);
+        _right1.set(ControlMode.PercentOutput, RVyCmd);
     }
 
     public void drive(double y, double z) {
@@ -84,8 +70,8 @@ public class Drivetrain {
     }
 
     public void odometry() {
-        SmartDashboard.putNumber("foward percent", VyCmd);
-        SmartDashboard.putNumber("turn percent", WzCmd);
+        SmartDashboard.putNumber("L percent", LVyCmd);
+        SmartDashboard.putNumber("R percent", RVyCmd);
         SmartDashboard.putNumber("left f/t percent", _left1.getMotorOutputPercent());
         SmartDashboard.putNumber("right f/t percent", _right1.getMotorOutputPercent());
     }
