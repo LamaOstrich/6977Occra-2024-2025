@@ -16,6 +16,7 @@ public class Drivetrain {
     // private double VxCmd;
     private double LVyCmd;
     private double RVyCmd;
+    // private double WzCmd;
     private XboxController _driverController = new XboxController(Constants.kDriverControllerUsbSlot);
     private static Drivetrain _instance;
     
@@ -46,6 +47,8 @@ public class Drivetrain {
 
         RVyCmd = -OneDimensionalLookup.interpLinear(Constants.XY_Axis_inputBreakpoints, Constants.XY_Axis_outputTable, _driverController.getRightY());
 
+        // WzCmd = OneDimensionalLookup.interpLinear(Constants.RotAxis_inputBreakpoints, Constants.RotAxis_outputTable, _driverController.getRightY());
+
         drive();
 
         odometry();
@@ -53,7 +56,22 @@ public class Drivetrain {
 
     public void drive() {
         _left1.set(ControlMode.PercentOutput, LVyCmd);
-        _right1.set(ControlMode.PercentOutput, RVyCmd);
+        _right1.set(ControlMode.PercentOutput, -RVyCmd);
+        // if (LVyCmd != 0) {
+        //     if (WzCmd == 0) {
+        //         _left1.set(ControlMode.PercentOutput, LVyCmd);
+        //         _right1.set(ControlMode.PercentOutput, -LVyCmd);
+        //     } else if (WzCmd < 0) {
+        //         _left1.set(ControlMode.PercentOutput, LVyCmd);
+        //         _right1.set(ControlMode.PercentOutput, -LVyCmd * (1 + WzCmd));
+        //     } else if (WzCmd > 0) {
+        //         _left1.set(ControlMode.PercentOutput, LVyCmd * (1 - WzCmd));
+        //         _right1.set(ControlMode.PercentOutput, -LVyCmd);
+        //     } 
+        // } else {
+        //     _left1.set(ControlMode.PercentOutput, -WzCmd);
+        //     _right1.set(ControlMode.PercentOutput, -WzCmd);
+        // }
     }
 
     public void drive(double y, double z) {
