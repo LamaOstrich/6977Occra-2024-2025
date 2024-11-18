@@ -104,20 +104,22 @@ public class Robot extends TimedRobot {
           break;
         case kDefaultAuto:
         default:
+          _drivetrain.drive(.5, 0);
           _spiker.setWantedState(SpikerState.SPIKE_FAR);
           _spiker.handleState();
-          _drivetrain.drive(.1, 0);
-          Timer.delay(.4);
+          Timer.delay(.3);
+          _drivetrain.drive(-.2, 0);
+          Timer.delay(.2);
           _drivetrain.drive(0, 0);
           _intake.setWantedState(IntakeState.FEED);
           _intake.handleState();
           Timer.delay(.4);
-          _intake.setWantedState(IntakeState.INTAKE);
           _spiker.setWantedState(SpikerState.IDLE);
-          _intake.handleState();
+          _intake.setWantedState(IntakeState.INTAKE);
           _spiker.handleState();
-          _drivetrain.drive(.7, 0);
-          Timer.delay(1);
+          _intake.handleState();
+          _drivetrain.drive(.6, 0);
+          Timer.delay(.5);
           _drivetrain.drive(0, 0);
           break;
       }
@@ -167,6 +169,7 @@ public class Robot extends TimedRobot {
       _spiker.setWantedState(SpikerState.SPIKE_CLOSE);
     } else if (_operatorController.getStartButton()) {
       _spiker.setWantedState(SpikerState.IDLE);
+      _intake.setWantedState(IntakeState.INTAKE);
     }
   }
 

@@ -13,7 +13,6 @@ public class Drivetrain {
     private TalonSRX _left2 = new TalonSRX(frc.robot.Utilities.Constants.kLeft2DriveMotor);
     private TalonSRX _right1 = new TalonSRX(frc.robot.Utilities.Constants.kRight1DriveMotor);
     private TalonSRX _right2 = new TalonSRX(frc.robot.Utilities.Constants.kRight2DriveMotor);
-    // private double VxCmd;
     private double LVyCmd;
     private double RVyCmd;
     // private double WzCmd;
@@ -80,7 +79,7 @@ public class Drivetrain {
             _right1.set(ControlMode.PercentOutput, -y);
         }  else if (z != 0) {
             _left1.set(ControlMode.PercentOutput, z);
-            _right1.set(ControlMode.PercentOutput, -z);
+            _right1.set(ControlMode.PercentOutput, z);
         } else {
             _left1.set(ControlMode.PercentOutput, 0);
             _right1.set(ControlMode.PercentOutput, 0);
