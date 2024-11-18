@@ -64,6 +64,10 @@ public class Intake {
         _motor.set(ControlMode.PercentOutput, 0.8);
     }
 
+    private void forceIdle() {
+        _motor.set(ControlMode.PercentOutput, 0.0);
+    }
+
     public void setWantedState(IntakeState state) {
         if (currentState != state) {
             currentState = state;
@@ -84,6 +88,9 @@ public class Intake {
                 break;
             case FEED:
                 feed();
+                break;
+            case FORCE_IDLE:
+                forceIdle();
                 break;
             default:
                 idle();

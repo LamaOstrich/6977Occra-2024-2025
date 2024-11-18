@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("Test", kTestAuto);
+    m_chooser.addOption("Special", kTestAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     Constants.defaultConfig.peakCurrentLimit = 35;
     Constants.defaultConfig.peakCurrentDuration = 1000;
@@ -104,20 +104,22 @@ public class Robot extends TimedRobot {
           break;
         case kDefaultAuto:
         default:
+        _drivetrain.drive(.5, 0);
         _spiker.setWantedState(SpikerState.SPIKE_FAR);
         _spiker.handleState();
-        _drivetrain.drive(.5, 0);
-        Timer.delay(.5);
+        Timer.delay(.3);
+        _drivetrain.drive(-.2, 0);
+        Timer.delay(.2);
         _drivetrain.drive(0, 0);
         _intake.setWantedState(IntakeState.FEED);
         _intake.handleState();
-        Timer.delay(.6);
-        _intake.setWantedState(IntakeState.INTAKE);
+        Timer.delay(.4);
         _spiker.setWantedState(SpikerState.IDLE);
+        _intake.setWantedState(IntakeState.INTAKE);
         _intake.handleState();
         _spiker.handleState();
         _drivetrain.drive(.7, 0);
-        Timer.delay(.6);
+        Timer.delay(.5);
         _drivetrain.drive(0, 0);
         break;
       }
