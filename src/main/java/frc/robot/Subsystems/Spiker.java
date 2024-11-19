@@ -32,7 +32,7 @@ public class Spiker {
     public void init() {
         _topMotor.configAllSettings(Constants.defaultSPXConfig);
         _lowMotor.configAllSettings(Constants.defaultSPXConfig);
-        _lowMotor.setInverted(false);
+        _topMotor.setInverted(true);
         setWantedState(SpikerState.IDLE);
     }
 
@@ -55,13 +55,13 @@ public class Spiker {
     }
 
     private void farSpike() {
-        _topMotor.set(ControlMode.PercentOutput, .8);
-        _lowMotor.set(ControlMode.PercentOutput, 1);
+        _topMotor.set(ControlMode.PercentOutput, .6);
+        _lowMotor.set(ControlMode.PercentOutput, .7);
     }
 
     private void closeSpike() {
         _topMotor.set(ControlMode.PercentOutput, 0.7);
-        _lowMotor.set(ControlMode.PercentOutput, .9);
+        _lowMotor.set(ControlMode.PercentOutput, .8);
     }
 
     private void intakebad() {
