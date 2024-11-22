@@ -74,6 +74,10 @@ public class Spiker {
         _lowMotor.set(ControlMode.PercentOutput, -.6);
     }
 
+    public SpikerState getCurrentState() {
+        return currentState;
+    }
+
     public void setWantedState(SpikerState state) {
         if (currentState != state) {
             currentState = state;

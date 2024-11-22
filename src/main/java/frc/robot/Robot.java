@@ -146,11 +146,14 @@ public class Robot extends TimedRobot {
   }
 
   public void intakeTeleop(){
-    if (_spike) {
-      _intake.setWantedState(IntakeState.FEED);
-    } else if (_spikeReleased) {
-      _spiker.setWantedState(SpikerState.IDLE);
-      _intake.setWantedState(IntakeState.INTAKE);
+    if (_spiker.getCurrentState() == SpikerState.SPIKE_CLOSE || _spiker.getCurrentState() == SpikerState.SPIKE_FAR) {
+      if (_spike) {
+        _intake.setWantedState(IntakeState.FEED);
+      } else if (_spikeReleased) {
+        _spiker.setWantedState(SpikerState.IDLE);
+        _intake.setWantedState(IntakeState.INTAKE);
+      }
+      _spikeReleased = _spike;
     }
     if (_driverController.getBButton()) {
       _intake.setWantedState(IntakeState.EJECT);
@@ -162,7 +165,6 @@ public class Robot extends TimedRobot {
     } else if (_driverController.getAButtonReleased()) {
       _spiker.setWantedState(SpikerState.IDLE);
     }
-    _spikeReleased = _spike;
     SmartDashboard.putBoolean("isHolding", _intake.isHolding());
   }
 
